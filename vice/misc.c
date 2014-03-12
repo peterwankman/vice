@@ -11,14 +11,17 @@
 
 #include <fcntl.h>
 #include <stdio.h>
-#include "defs.h"
+#include <string.h>
 
 #ifdef WIN32
 #include <Windows.h>
 #include <io.h>
 #else
-#include <time.h>
+#include <sys/time.h>
+#include <unistd.h>
 #endif
+
+#include "defs.h"
 
 int GetTimeMs(void) {
 #ifdef WIN32
@@ -26,7 +29,7 @@ int GetTimeMs(void) {
 #else
 	struct timeval t;
 	gettimeofday(&t, NULL);
-	return t.tv_sec * 1000 + tv_usec / 1000;
+	return t.tv_sec * 1000 + t.tv_usec / 1000;
 #endif
 }
 
@@ -34,6 +37,7 @@ int GetTimeMs(void) {
 int InputWaiting()
 {
 #ifndef WIN32
+	struct timeval tv;
 	fd_set readfds;
 
 	FD_ZERO (&readfds);
