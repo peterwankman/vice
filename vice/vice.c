@@ -24,6 +24,7 @@ int main(void) {
 
 	AllInit();
     InitHashTable(pos->HashTable, 64);
+	memset(pos->searchKillers, 0, 2 * MAXDEPTH * sizeof(int));
 
 	setbuf(stdin, NULL);
     setbuf(stdout, NULL);
