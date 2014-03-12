@@ -263,32 +263,38 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
 	int pvNum = 0;
 
 	ClearForSearch(pos, info);
-	for(currentDepth = 1; currentDepth <= info->depth; ++currentDepth) {
-		bestScore = AlphaBeta(-INF, INF, currentDepth, pos, info, TRUE);
 
-		if(info->stopped == TRUE)
-			break;
+	if(EngineOptions->UseBook == TRUE)
+		bestMove = GetBookMove(pos);
 
-		pvMoves = GetPvLine(currentDepth, pos);
-		bestMove = pos->PvArray[0];
+	if(bestMove == NOMOVE) {		
+		for(currentDepth = 1; currentDepth <= info->depth; ++currentDepth) {
+			bestScore = AlphaBeta(-INF, INF, currentDepth, pos, info, TRUE);
+	
+			if(info->stopped == TRUE)
+				break;
 
-		if(info->GAME_MODE == UCIMODE) {
-			printf("info score cp %d depth %d nodes %ld time %d ",
-				bestScore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
-		} else if(info->GAME_MODE == XBOARDMODE && info->POST_THINKING == TRUE) {
-			printf("%d %d %d %ld ",
-				currentDepth, bestScore, (GetTimeMs() - info->starttime) / 10, info->nodes);
-		} else if(info->POST_THINKING == TRUE) {
-			printf("score:%d depth:%d nodes:%ld time:%d(ms) ",
-				bestScore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
-		}
-
-		if(info->GAME_MODE == UCIMODE || info->POST_THINKING == TRUE) {
 			pvMoves = GetPvLine(currentDepth, pos);
-			printf("pv");
-			for(pvNum = 0; pvNum < pvMoves; ++pvNum)
-				printf(" %s", PrMove(pos->PvArray[pvNum]));
-			printf("\n");
+			bestMove = pos->PvArray[0];
+
+			if(info->GAME_MODE == UCIMODE) {
+				printf("info score cp %d depth %d nodes %ld time %d ",
+					bestScore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
+			} else if(info->GAME_MODE == XBOARDMODE && info->POST_THINKING == TRUE) {
+				printf("%d %d %d %ld ",
+					currentDepth, bestScore, (GetTimeMs() - info->starttime) / 10, info->nodes);
+			} else if(info->POST_THINKING == TRUE) {
+				printf("score:%d depth:%d nodes:%ld time:%d(ms) ",
+					bestScore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
+			}	
+	
+			if(info->GAME_MODE == UCIMODE || info->POST_THINKING == TRUE) {
+				pvMoves = GetPvLine(currentDepth, pos);
+				printf("pv");
+				for(pvNum = 0; pvNum < pvMoves; ++pvNum)
+					printf(" %s", PrMove(pos->PvArray[pvNum]));
+				printf("\n");
+			}
 		}
 	}
 

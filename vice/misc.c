@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "defs.h"
+
 #ifdef WIN32
 #include <Windows.h>
 #include <io.h>
@@ -20,8 +22,6 @@
 #include <sys/time.h>
 #include <unistd.h>
 #endif
-
-#include "defs.h"
 
 int GetTimeMs(void) {
 #ifdef WIN32

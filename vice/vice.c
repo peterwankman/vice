@@ -15,10 +15,11 @@
 
 #include "defs.h"
 
-int main(void) {
+int main(int argc, char **argv) {
 	S_BOARD pos[1];
 	S_SEARCHINFO info[1];
 	char line[256];
+	int ArgNum = 0;
 
 	pos->HashTable->pTable = NULL;
 
@@ -28,6 +29,12 @@ int main(void) {
 
 	setbuf(stdin, NULL);
 	setbuf(stdout, NULL);
+
+	for(ArgNum = 0; ArgNum < argc; ++ArgNum) {
+		if(strncmp(argv[ArgNum], "NoBook", 6) == 0) {
+			EngineOptions->UseBook = FALSE;
+		}
+	}
 	
 	printf("Welcome to Vice! Type 'vice' for console mode...\n");
 
@@ -57,5 +64,6 @@ int main(void) {
 	}
 	
 	free(pos->HashTable->pTable);
+	CleanPolyBook();
 	return 0;
 }

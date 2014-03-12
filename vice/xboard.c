@@ -184,6 +184,12 @@ void XBoard_Loop(S_BOARD *pos, S_SEARCHINFO *info) {
 			continue;
 		}
 
+		if(!strcmp(command, "polykey")) {
+			PrintBoard(pos);
+			GetBookMove(pos);
+			continue;
+		}
+
 		if(!strcmp(command, "memory")) {		
 			sscanf(inBuf, "memory %d", &MB);	
 			if(MB < 4) MB = 4;

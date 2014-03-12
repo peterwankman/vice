@@ -33,7 +33,7 @@
 
 typedef unsigned long long U64;
 
-#define NAME "Vicemod 1.0"
+#define NAME "Vicemod 1.1"
 #define BRD_SQ_NUM 120
 
 #define MAXGAMEMOVES 2048
@@ -131,6 +131,10 @@ typedef struct {
 	float fh, fhf;
 } S_SEARCHINFO;
 
+typedef struct {
+	int UseBook;
+} S_OPTIONS;
+
 /* MACROS */
 
 #define FR2SQ(f, r) ((21 + (f)) + ((r) * 10))
@@ -199,6 +203,8 @@ extern U64 RankBBMask[8];
 extern U64 BlackPassedMask[64];
 extern U64 WhitePassedMask[64];
 extern U64 IsolatedMask[64];
+
+S_OPTIONS EngineOptions[1];
 
 /* FUNCTIONS */
 
@@ -274,6 +280,13 @@ extern int EvalPosition(const S_BOARD *pos);
 /* uci.c */
 extern void Uci_Loop(S_BOARD *pos, S_SEARCHINFO *info);
 
+/* xboard.c */
 extern void XBoard_Loop(S_BOARD *pos, S_SEARCHINFO *info);
 extern void Console_Loop(S_BOARD *pos, S_SEARCHINFO *info);
+
+/* polybook.c */
+extern int GetBookMove(S_BOARD *board);
+extern void InitPolyBook(void);
+extern void CleanPolyBook(void);
+
 #endif
