@@ -75,7 +75,7 @@ void ReadInput(S_SEARCHINFO *info) {
 	int bytes;
 	char input[256] = "", *endc;
 
-	if(InputWaiting()) {    
+	if(InputWaiting()) {
 		info->stopped = TRUE;
 		do {
 			bytes=read(fileno(stdin), input, 256);
@@ -85,7 +85,7 @@ void ReadInput(S_SEARCHINFO *info) {
 			*endc = 0;
 
 		if (strlen(input) > 0) {
-			if (!strncmp(input, "quit", 4))    {
+			if (!strncmp(input, "quit", 4))	{
 				info->quit = TRUE;
 			}
 		}

@@ -13,12 +13,12 @@
 
 #include "defs.h"
 
-#define RAND_64    ((U64)rand() | \
+#define RAND_64	((U64)rand() | \
 					((U64) rand() << 15) | \
 					((U64) rand() << 30) | \
 					((U64) rand() << 45) | \
 					(((U64)rand() & 0xf) << 60))
-					
+				
 
 int Sq120ToSq64[BRD_SQ_NUM];
 int Sq64ToSq120[64];
@@ -64,49 +64,49 @@ void InitEvalMasks(void) {
 
 	for(sq = 0; sq < 64; ++sq) {
 		tsq = sq + 8;
-		
-        while(tsq < 64) {
-            WhitePassedMask[sq] |= (1ULL << tsq);
-            tsq += 8;
-        }
+	
+		while(tsq < 64) {
+			WhitePassedMask[sq] |= (1ULL << tsq);
+			tsq += 8;
+		}
 
-        tsq = sq - 8;
-        while(tsq >= 0) {
-            BlackPassedMask[sq] |= (1ULL << tsq);
-            tsq -= 8;
-        }
+		tsq = sq - 8;
+		while(tsq >= 0) {
+			BlackPassedMask[sq] |= (1ULL << tsq);
+			tsq -= 8;
+		}
 
-        if(FilesBrd[SQ120(sq)] > FILE_A) {
-            IsolatedMask[sq] |= FileBBMask[FilesBrd[SQ120(sq)] - 1];
+		if(FilesBrd[SQ120(sq)] > FILE_A) {
+			IsolatedMask[sq] |= FileBBMask[FilesBrd[SQ120(sq)] - 1];
 
-            tsq = sq + 7;
-            while(tsq < 64) {
-                WhitePassedMask[sq] |= (1ULL << tsq);
-                tsq += 8;
-            }
+			tsq = sq + 7;
+			while(tsq < 64) {
+				WhitePassedMask[sq] |= (1ULL << tsq);
+				tsq += 8;
+			}
 
-            tsq = sq - 9;
-            while(tsq >= 0) {
-                BlackPassedMask[sq] |= (1ULL << tsq);
-                tsq -= 8;
-            }
-        }
-		
-        if(FilesBrd[SQ120(sq)] < FILE_H) {
-            IsolatedMask[sq] |= FileBBMask[FilesBrd[SQ120(sq)] + 1];
+			tsq = sq - 9;
+			while(tsq >= 0) {
+				BlackPassedMask[sq] |= (1ULL << tsq);
+				tsq -= 8;
+			}
+		}
+	
+		if(FilesBrd[SQ120(sq)] < FILE_H) {
+			IsolatedMask[sq] |= FileBBMask[FilesBrd[SQ120(sq)] + 1];
 
-            tsq = sq + 9;
-            while(tsq < 64) {
-                WhitePassedMask[sq] |= (1ULL << tsq);
-                tsq += 8;
-            }
+			tsq = sq + 9;
+			while(tsq < 64) {
+				WhitePassedMask[sq] |= (1ULL << tsq);
+				tsq += 8;
+			}
 
-            tsq = sq - 7;
-            while(tsq >= 0) {
-                BlackPassedMask[sq] |= (1ULL << tsq);
-                tsq -= 8;
-            }
-        }
+			tsq = sq - 7;
+			while(tsq >= 0) {
+				BlackPassedMask[sq] |= (1ULL << tsq);
+				tsq -= 8;
+			}
+		}
 	}
 }
 

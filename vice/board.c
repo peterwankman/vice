@@ -49,7 +49,7 @@ int CheckBoard(const S_BOARD *pos) {
 
 	for(t_piece = wP; t_piece <= bK; ++t_piece)
 		ASSERT(t_pceNum[t_piece] == pos->pceNum[t_piece]);
-	
+
 	pcount = CNT(t_pawns[WHITE]);
 	ASSERT(pcount == pos->pceNum[wP]);
 	pcount = CNT(t_pawns[BLACK]);
@@ -81,7 +81,7 @@ int CheckBoard(const S_BOARD *pos) {
 	ASSERT(pos->side == WHITE || pos->side == BLACK);
 	ASSERT(GeneratePositionKey(pos) == pos->posKey);
 
-	ASSERT(pos->enPas == NO_SQ || 
+	ASSERT(pos->enPas == NO_SQ ||
 		(RanksBrd[pos->enPas] == RANK_6 && pos->side == WHITE) ||
 		(RanksBrd[pos->enPas] == RANK_3 && pos->side == BLACK));
 
@@ -134,7 +134,7 @@ int ParseFen(char *fen, S_BOARD *pos) {
 	ASSERT(fen != NULL);
 	ASSERT(pos != NULL);
 
-	ResetBoard(pos); 
+	ResetBoard(pos);
 
 	while((rank >= RANK_1) && *fen) {
 		count = 1;
@@ -199,7 +199,7 @@ int ParseFen(char *fen, S_BOARD *pos) {
 			case 'K': pos->castlePerm |= WKCA; break;
 			case 'Q': pos->castlePerm |= WQCA; break;
 			case 'k': pos->castlePerm |= BKCA; break;
-			case 'q': pos->castlePerm |= BQCA; break;			
+			case 'q': pos->castlePerm |= BQCA; break;		
 		}
 		fen++;
 	}
@@ -295,43 +295,43 @@ void PrintBoard(const S_BOARD *pos) {
 
 void MirrorBoard(S_BOARD *pos) {
 
-    int tempPiecesArray[64];
-    int tempSide = pos->side^1;
+	int tempPiecesArray[64];
+	int tempSide = pos->side^1;
 	int SwapPiece[13] = { EMPTY, bP, bN, bB, bR, bQ, bK, wP, wN, wB, wR, wQ, wK };
-    int tempCastlePerm = 0;
-    int tempEnPas = NO_SQ;
-	
+	int tempCastlePerm = 0;
+	int tempEnPas = NO_SQ;
+
 	int sq;
 	int tp;
-	
-    if (pos->castlePerm & WKCA) tempCastlePerm |= BKCA;
-    if (pos->castlePerm & WQCA) tempCastlePerm |= BQCA;
 
-    if (pos->castlePerm & BKCA) tempCastlePerm |= WKCA;
-    if (pos->castlePerm & BQCA) tempCastlePerm |= WQCA;
-	
+	if (pos->castlePerm & WKCA) tempCastlePerm |= BKCA;
+	if (pos->castlePerm & WQCA) tempCastlePerm |= BQCA;
+
+	if (pos->castlePerm & BKCA) tempCastlePerm |= WKCA;
+	if (pos->castlePerm & BQCA) tempCastlePerm |= WQCA;
+
 	if (pos->enPas != NO_SQ)  {
-        tempEnPas = SQ120(Mirror64[SQ64(pos->enPas)]);
-    }
+		tempEnPas = SQ120(Mirror64[SQ64(pos->enPas)]);
+	}
 
-    for (sq = 0; sq < 64; sq++) {
-        tempPiecesArray[sq] = pos->pieces[SQ120(Mirror64[sq])];
-    }
-
-    ResetBoard(pos);
-	
 	for (sq = 0; sq < 64; sq++) {
-        tp = SwapPiece[tempPiecesArray[sq]];
-        pos->pieces[SQ120(sq)] = tp;
-    }
-	
-	pos->side = tempSide;
-    pos->castlePerm = tempCastlePerm;
-    pos->enPas = tempEnPas;
+		tempPiecesArray[sq] = pos->pieces[SQ120(Mirror64[sq])];
+	}
 
-    pos->posKey = GeneratePositionKey(pos); 
-	
+	ResetBoard(pos);
+
+	for (sq = 0; sq < 64; sq++) {
+		tp = SwapPiece[tempPiecesArray[sq]];
+		pos->pieces[SQ120(sq)] = tp;
+	}
+
+	pos->side = tempSide;
+	pos->castlePerm = tempCastlePerm;
+	pos->enPas = tempEnPas;
+
+	pos->posKey = GeneratePositionKey(pos);
+
 	UpdateListsMaterial(pos);
 
-    ASSERT(CheckBoard(pos));
+	ASSERT(CheckBoard(pos));
 }

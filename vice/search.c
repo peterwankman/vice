@@ -102,19 +102,19 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
 	if(Score > alpha)
 		alpha = Score;
 
-    GenerateAllCaps(pos, list);
+	GenerateAllCaps(pos, list);
 
 	Score = -INF;
 
 	for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
 		PickNextMove(MoveNum, list);
 
-        if (!MakeMove(pos, list->moves[MoveNum].move)) 
-            continue;
+		if (!MakeMove(pos, list->moves[MoveNum].move))
+			continue;
 
 		Legal++;
 		Score = -Quiescence(-beta, -alpha, pos, info);
-        TakeMove(pos);
+		TakeMove(pos);
 
 		if(info->stopped == TRUE)
 			return 0;
@@ -128,7 +128,7 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
 			}
 			alpha = Score;
 		}
-    }
+	}
 
 	return alpha;
 }
@@ -138,7 +138,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 	int InCheck;
 	int Score = -INF;
 	int PvMove = NOMOVE;
-    int MoveNum = 0;
+	int MoveNum = 0;
 	int Legal = 0;
 	int OldAlpha = alpha;
 	int BestMove = NOMOVE;
@@ -185,7 +185,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 		}
 	}
 
-    GenerateAllMoves(pos, list);
+	GenerateAllMoves(pos, list);
 
 	Score = -INF;
 
@@ -201,8 +201,8 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 	for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
 		PickNextMove(MoveNum, list);
 
-        if(!MakeMove(pos,list->moves[MoveNum].move)) 
-            continue;
+		if(!MakeMove(pos,list->moves[MoveNum].move))
+			continue;
 
 		Legal++;
 		Score = -AlphaBeta(-beta, -alpha, depth - 1, pos, info, TRUE);
@@ -234,7 +234,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 					pos->searchHistory[pos->pieces[FROMSQ(BestMove)]][TOSQ(BestMove)] += depth;
 			}
 		}
-    }
+	}
 
 	if(Legal == 0) {
 		if(InCheck) {
@@ -291,13 +291,13 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
 			printf("\n");
 		}
 	}
-	
+
 	if(info->GAME_MODE == UCIMODE) {
 		printf("bestmove %s\n", PrMove(bestMove));
-	} else if(info->GAME_MODE == XBOARDMODE) {		
+	} else if(info->GAME_MODE == XBOARDMODE) {	
 		printf("move %s\n", PrMove(bestMove));
 		MakeMove(pos, bestMove);
-	} else {	
+	} else {
 		printf("\n\n***!! Vice makes move %s !!***\n\n", PrMove(bestMove));
 		MakeMove(pos, bestMove);
 		PrintBoard(pos);

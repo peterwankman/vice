@@ -17,17 +17,17 @@
 
 int main(void) {
 	S_BOARD pos[1];
-    S_SEARCHINFO info[1];   
+	S_SEARCHINFO info[1];
 	char line[256];
 
 	pos->HashTable->pTable = NULL;
 
 	AllInit();
-    InitHashTable(pos->HashTable, 64);
+	InitHashTable(pos->HashTable, 64);
 	memset(pos->searchKillers, 0, 2 * MAXDEPTH * sizeof(int));
 
 	setbuf(stdin, NULL);
-    setbuf(stdout, NULL);
+	setbuf(stdout, NULL);
 	
 	printf("Welcome to Vice! Type 'vice' for console mode...\n");
 

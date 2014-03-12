@@ -28,7 +28,7 @@ const int PawnTable[64] = {
 	5,	5,	5,	10,	10,	5,	5,	5,
 	10,	10,	10,	20,	20,	10,	10,	10,
 	20,	20,	20,	30,	30,	20,	20,	20,
-	0,	0,	0,	0,	0,	0,	0,	0	
+	0,	0,	0,	0,	0,	0,	0,	0
 };
 
 const int KnightTable[64] = {
@@ -61,10 +61,10 @@ const int RookTable[64] = {
 	0,	0,	5,	10,	10,	5,	0,	0,
 	0,	0,	5,	10,	10,	5,	0,	0,
 	25,	25,	25,	25,	25,	25,	25,	25,
-	0,	0,	5,	10,	10,	5,	0,	0	
+	0,	0,	5,	10,	10,	5,	0,	0
 };
 
-const int KingE[64] = {	
+const int KingE[64] = {
 	-50,-10,0,	0,	0,	0,	-10,-50,
 	-10,0,	10,	10,	10,	10,	0,	-10,
 	0,	10,	15,	15,	15,	15,	10,	0,
@@ -72,10 +72,10 @@ const int KingE[64] = {
 	0,	10,	15,	20,	20,	15,	10,	0,
 	0,	10,	15,	15,	15,	15,	10,	0,
 	-10,0,	10,	10,	10,	10,	0,	-10,
-	-50,-10,0,	0,	0,	0,	-10,-50	
+	-50,-10,0,	0,	0,	0,	-10,-50
 };
 
-const int KingO[64] = {	
+const int KingO[64] = {
 	0,	5,	5,	-10,-10,0,	10,	5,
 	-30,-30,-30,-30,-30,-30,-30,-30,
 	-50,-50,-50,-50,-50,-50,-50,-50,
@@ -83,16 +83,16 @@ const int KingO[64] = {
 	-70,-70,-70,-70,-70,-70,-70,-70,
 	-70,-70,-70,-70,-70,-70,-70,-70,
 	-70,-70,-70,-70,-70,-70,-70,-70,
-	-70,-70,-70,-70,-70,-70,-70,-70		
+	-70,-70,-70,-70,-70,-70,-70,-70	
 };
 
 int MaterialDraw(const S_BOARD *pos) {
 	if(!pos->pceNum[wR] && !pos->pceNum[bR] && !pos->pceNum[wQ] && !pos->pceNum[bQ]) {
 		if(!pos->pceNum[bB] && !pos->pceNum[wB]) {
-			if(pos->pceNum[wN] < 3 && pos->pceNum[bN] < 3) 
+			if(pos->pceNum[wN] < 3 && pos->pceNum[bN] < 3)
 				return TRUE;
 		} else if (!pos->pceNum[wN] && !pos->pceNum[bN]) {
-			if (abs(pos->pceNum[wB] - pos->pceNum[bB]) < 2) 
+			if (abs(pos->pceNum[wB] - pos->pceNum[bB]) < 2)
 				return TRUE;
 		} else if ((pos->pceNum[wN] < 3 && !pos->pceNum[wB]) || (pos->pceNum[wB] == 1 && !pos->pceNum[wN])) {
 			if ((pos->pceNum[bN] < 3 && !pos->pceNum[bB]) || (pos->pceNum[bB] == 1 && !pos->pceNum[bN]))
