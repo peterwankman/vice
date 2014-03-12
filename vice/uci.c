@@ -111,7 +111,7 @@ void Uci_Loop(S_BOARD *pos, S_SEARCHINFO *info) {
 	printf("id name %s\n",NAME);
 	printf("id author Bluefever\n");
 	printf("option name Hash type spin default 64 min 4 max %d\n", MAX_HASH);
-	printf("option name Book type check default true\n", MAX_HASH);
+	printf("option name Book type check default true\n");
 	printf("uciok\n");
 
 

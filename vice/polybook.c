@@ -135,12 +135,12 @@ unsigned int endian_swap_u32(unsigned int x) {
 
 U64 endian_swap_u64(U64 x) {
 	x = (x >> 56) |
-		((x << 40) & 0x00ff000000000000) |
-		((x << 24) & 0x0000ff0000000000) |
-		((x << 8)  & 0x000000ff00000000) |
-		((x >> 8)  & 0x00000000ff000000) |
-		((x >> 24) & 0x0000000000ff0000) |
-		((x >> 40) & 0x000000000000ff00) |
+		((x << 40) & 0x00ff000000000000ULL) |
+		((x << 24) & 0x0000ff0000000000ULL) |
+		((x << 8)  & 0x000000ff00000000ULL) |
+		((x >> 8)  & 0x00000000ff000000ULL) |
+		((x >> 24) & 0x0000000000ff0000ULL) |
+		((x >> 40) & 0x000000000000ff00ULL) |
 		(x << 56);
 	return x;
 }
@@ -179,7 +179,6 @@ int ConvertPolyMoveToInternalMove(unsigned short polyMove, S_BOARD *board) {
 }
 
 int GetBookMove(S_BOARD *board) {
-	int index = 0;
 	S_POLY_BOOK_ENTRY *entry;
 	unsigned short move;
 	const int MAXBOOKMOVES = 32;

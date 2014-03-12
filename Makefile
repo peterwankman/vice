@@ -18,6 +18,8 @@ $(OBJ)/makemove.o \
 $(OBJ)/misc.o \
 $(OBJ)/movegen.o \
 $(OBJ)/perft.o \
+$(OBJ)/polybook.o \
+$(OBJ)/polykeys.o \
 $(OBJ)/pvtable.o \
 $(OBJ)/search.o \
 $(OBJ)/uci.o \
@@ -57,6 +59,12 @@ $(OBJ)/misc.o: $(SRC)/misc.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 $(OBJ)/movegen.o: $(SRC)/movegen.c
+	$(CC) $(CFLAGS) -c -o $@ $^
+
+$(OBJ)/polybook.o: $(SRC)/polybook.c
+	$(CC) $(CFLAGS) -c -o $@ $^
+
+$(OBJ)/polykeys.o: $(SRC)/polykeys.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 $(OBJ)/perft.o: $(SRC)/perft.c
