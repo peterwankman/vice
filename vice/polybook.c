@@ -57,6 +57,8 @@ void InitPolyBook(void) {
 			EngineOptions->UseBook = TRUE;
 		}
 	}
+
+	fclose(pFile);
 }
 
 void CleanPolyBook(void) {
