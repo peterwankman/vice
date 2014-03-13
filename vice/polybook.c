@@ -180,14 +180,29 @@ int ConvertPolyMoveToInternalMove(unsigned short polyMove, S_BOARD *board) {
 	return ParseMove(moveString, board);
 }
 
+static int PickMove(int *moves, unsigned short *weight, unsigned int cumWeight, int count) {
+	int i, pick;
+
+	pick = rand() % cumWeight;
+
+	for(i = 0; i < count; i++) {
+		if(pick < weight[i])
+			return moves[i];
+		pick -= weight[i];
+		cumWeight -= weight[i];
+	}
+	return weight[count - 1];
+}
+
 int GetBookMove(S_BOARD *board) {
 	S_POLY_BOOK_ENTRY *entry;
 	unsigned short move;
 	const int MAXBOOKMOVES = 32;
 	int bookMoves[32]; /* !! */
+	unsigned short weight[32];
+	unsigned int cumWeight = 0;
 	int tempMove = NOMOVE;
 	int count = 0;
-	int randMove;
 
 	U64 polyKey = PolyKeyFromBoard(board);
 
@@ -196,6 +211,8 @@ int GetBookMove(S_BOARD *board) {
 			move = endian_swap_u16(entry->move);
 			tempMove = ConvertPolyMoveToInternalMove(move, board);
 			if(tempMove != NOMOVE) {
+				weight[count] = entry->weight;
+				cumWeight += weight[count];
 				bookMoves[count++] = tempMove;
 				if(count > MAXBOOKMOVES)
 					break;
@@ -204,8 +221,7 @@ int GetBookMove(S_BOARD *board) {
 	}
 
 	if(count != 0) {
-		randMove = rand() % count;
-		return bookMoves[randMove];
+		return PickMove(bookMoves, weight, cumWeight, count);
 	} else {
 		return NOMOVE;
 	}

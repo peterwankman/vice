@@ -10,6 +10,7 @@
  */
 
 #include <stdlib.h>
+#include <time.h>
 
 #include "defs.h"
 
@@ -182,6 +183,7 @@ void InitSq120To64(void) {
 }
 
 void AllInit(void) {
+	srand(time(NULL));
 	InitSq120To64();
 	InitBitMasks();
 	InitHashKeys();
